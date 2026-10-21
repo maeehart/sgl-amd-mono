@@ -21,7 +21,9 @@ SPECS = {
     "DeepseekV4ForCausalLM": "sgl_amd_mono.deepseek_v41.spec:SPEC",
     "DeepseekV4ForCausalLMDSpark": "sgl_amd_mono.deepseek_v41.draft:SPEC",
     "Glm5NextForConditionalGeneration": "sgl_amd_mono.glm53_flash.spec:SPEC",
-    "GlmMoeDsaForCausalLM": "sgl_amd_mono.glm53.spec:SPEC",
+    # GLM-5.3's block-FP8 and Quark MXFP4 checkpoints share the architecture,
+    # and glm_moe_dsa picks the spec of the checkpoint (glm53 or glm53_mxfp4)
+    "GlmMoeDsaForCausalLM": "sgl_amd_mono.glm_moe_dsa:SPEC",
     "MiniMaxM3SparseForCausalLM": "sgl_amd_mono.minimax_m3.spec:SPEC",
     "MiniMaxM3SparseForConditionalGeneration": "sgl_amd_mono.minimax_m3.spec:SPEC",
 }

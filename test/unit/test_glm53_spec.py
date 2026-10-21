@@ -11,6 +11,7 @@ from sglang.srt.layers.moe.utils import MoeRunnerBackend
 from sglang.srt.monokernels import spec as registry
 
 import sgl_amd_mono
+from sgl_amd_mono import glm_moe_dsa
 from sgl_amd_mono.glm53 import HF_CONFIG
 from sgl_amd_mono.glm53 import spec as glm53
 from sgl_amd_mono.glm53.gfx950.weights import rope_tables
@@ -39,7 +40,10 @@ def test_the_plugin_registers_the_spec():
     found, why = registry.find_spec(
         backend=sgl_amd_mono.BACKEND, architectures=arch, isa="gfx950"
     )
-    assert found is glm53.SPEC, why
+    # glm_moe_dsa holds the architecture's entry and picks this spec for the
+    # block-FP8 checkpoint
+    assert found is glm_moe_dsa.SPEC, why
+    assert glm_moe_dsa.chosen(GLM53) is glm53.SPEC
     found, why = registry.find_spec(
         backend=sgl_amd_mono.BACKEND, architectures=arch, isa="gfx942"
     )
